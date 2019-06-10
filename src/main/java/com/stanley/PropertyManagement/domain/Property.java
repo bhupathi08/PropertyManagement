@@ -1,5 +1,7 @@
 package com.stanley.PropertyManagement.domain;
-
+/**
+ * @author Administrator
+ */
 import java.sql.Blob;
 
 public class Property {
