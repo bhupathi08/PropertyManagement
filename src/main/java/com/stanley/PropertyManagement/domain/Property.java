@@ -1,6 +1,7 @@
 package com.stanley.PropertyManagement.domain;
 /**
- * @author Dedeepya
+ @author Dedeepya
+ For testing purpose Git entered the comments
  */
 import java.sql.Blob;
 
