@@ -1,6 +1,6 @@
 package com.stanley.PropertyManagement.domain;
 /**
- * @author Administrator
+ * @author Dedeepya
  */
 import java.sql.Blob;
 
