@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
 import com.stanley.PropertyManagement.conn.*;
-import com.stanley.PropertyManagement.model.*;
-import com.stanley.PropertyManagement.utils.*;
+import com.stanley.PropertyManagement.domain.*;
+
+import com.stanley.PropertyManagement.manager.PropertyManager;
+import com.stanley.PropertyManagement.manager.implementation.*;
 
 @WebServlet(urlPatterns = { "/createProperty" })
 public class CreateProperty extends HttpServlet {
@@ -27,14 +29,6 @@ public class CreateProperty extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Connection conn = null;
-		try {
-			conn = ConnectionUtils.getMySQLConnection();
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
  
         int id = 1;
         String title = (String) request.getParameter("Title");
@@ -42,19 +36,15 @@ public class CreateProperty extends HttpServlet {
         String landmark = (String) request.getParameter("Landmark");
         String area = (String) request.getParameter("Area");
         String price = (String) request.getParameter("Price");
-
-        Property property = new Property(id,title,location,landmark,area,price);
- 
+        String image = (String) request.getParameter("image");
+        String contactNumber = (String) request.getParameter("ContactNumber");
+        
+        Property property = new Property(id,title,location,landmark,area,price,image,contactNumber);
+        
         String errorString = null;
-       
-        if (errorString == null) {
-            try {
-                DBUtils.insertProperty(conn, property);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                errorString = e.getMessage();
-            }
-        }
+        
+        PropertyManager prop = new PropertyManagerImpl();
+    	errorString = prop.addProperty(property);
  
         if (errorString != null) {
             RequestDispatcher dispatcher = request.getServletContext()
@@ -62,7 +52,7 @@ public class CreateProperty extends HttpServlet {
             dispatcher.forward(request, response);
         }
         else {
-            response.sendRedirect(request.getContextPath() + "/ViewProperties.jsp");
+            response.sendRedirect(request.getContextPath() + "/ViewProperty");
         }
     }
 }

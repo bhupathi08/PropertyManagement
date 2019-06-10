@@ -2,7 +2,10 @@ package com.stanley.PropertyManagement.model;
 
 public class Property {
    
-   private int id;
+   public Property() {
+		super();
+	}
+private int id;
    private String title;
    private String location;
    private String landmark;
